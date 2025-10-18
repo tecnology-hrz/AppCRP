@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auxiliar en Compras y Repartos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../Componentes/css/Princiapal.css">
+    <script type="module" src="../Componentes/js/conexion.js"></script>
+    <script src="../Componentes/js/menu.js"></script>
+    <script src="../Componentes/js/Compras.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="title">
+                <h1>Auxiliar en Compras y Repartos</h1>
+                <p>Sistema de Gestión Inteligente</p>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="btn btn-online"><i class="fas fa-wifi"></i> Online</button>
+            <button class="btn btn-delete"><i class="fas fa-trash"></i> Eliminar negocio</button>
+            <button class="btn btn-new"><i class="fas fa-plus"></i> Nuevo negocio</button>
+        </div>
+    </header>
+    <main class="main-content">
+        <div class="compras-container">
+            <h2>Compras Consolidadas</h2>
+
+            <!-- Filtros de fechas -->
+            <div class="compras-filters">
+                <div class="filter-group">
+                    <label for="fecha-inicio"><i class="fas fa-calendar"></i> Fecha Inicio</label>
+                    <input type="date" id="fecha-inicio">
+                </div>
+                <div class="filter-group">
+                    <label for="fecha-fin"><i class="fas fa-calendar"></i> Fecha Fin</label>
+                    <input type="date" id="fecha-fin">
+                </div>
+                <button class="btn-consultar" id="btn-consultar"><i class="fas fa-search"></i> Consultar Pedidos</button>
+                <div class="saldos-container">
+                    <div class="saldo-item">
+                        <span class="saldo-label"><i class="fas fa-money-bill-wave"></i> Saldo Total:</span>
+                        <span class="saldo-valor" id="saldo-total">$0</span>
+                    </div>
+                    <div class="saldo-item">
+                        <span class="saldo-label"><i class="fas fa-coins"></i> Saldo Disponible:</span>
+                        <span class="saldo-valor" id="saldo-disponible">$0</span>
+                    </div>
+                    <div class="saldo-item">
+                        <span class="saldo-label"><i class="fas fa-shopping-cart"></i> Saldo Gastado:</span>
+                        <span class="saldo-valor" id="saldo-gastado">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de compras consolidadas -->
+            <div class="compras-table-container" id="compras-table-container" style="display: none;">
+                <h3>Productos a Comprar</h3>
+                <div class="table-container">
+                    <table class="compras-table">
+                        <thead>
+                            <tr style="background-color: #7AC143; color: white;">
+                                <th>Producto</th>
+                                <th>Cantidad Total Pedida</th>
+                                <th>Cantidad a Comprar</th>
+                                <th>Proveedor</th>
+                                <th>Unidad</th>
+                                <th>Costo Unitario</th>
+                                <th>Costo Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="compras-tbody">
+                            <!-- Las filas se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Botón guardar compra -->
+                <div class="save-container">
+                    <button class="btn-guardar-compra" id="btn-guardar-compra" disabled><i class="fas fa-save"></i> Guardar Compra</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav class="navbar">
+        <ul>
+            <li>
+                <a href="Pedidos.html">
+                    <i class="fas fa-shopping-cart icon"></i>
+                    <span class="text">Pedidos</span>
+                </a>
+            </li>
+            <li>
+                <a href="Compras.html">
+                    <i class="fas fa-receipt icon"></i>
+                    <span class="text">Compras</span>
+                </a>
+            </li>
+            <li>
+                <a href="Repartos.html">
+                    <i class="fas fa-truck icon"></i>
+                    <span class="text">Reparto</span>
+                </a>
+            </li>
+            <li>
+                <a href="Informes.html">
+                    <i class="fas fa-chart-bar icon"></i>
+                    <span class="text">Informes</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auxiliar en Compras y Repartos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../Componentes/css/Princiapal.css">
+    <script type="module" src="../Componentes/js/conexion.js"></script>
+    <script type="module" src="../Componentes/js/Repartos.js"></script>
+    <script src="../Componentes/js/menu.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="title">
+                <h1>Auxiliar en Compras y Repartos</h1>
+                <p>Sistema de Gestión Inteligente</p>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="btn btn-online"><i class="fas fa-wifi"></i> Online</button>
+            <button class="btn btn-delete"><i class="fas fa-trash"></i> Eliminar negocio</button>
+            <button class="btn btn-new"><i class="fas fa-plus"></i> Nuevo negocio</button>
+        </div>
+    </header>
+    <main class="main-content">
+        <div class="repartos-container">
+            <h2>Gestión de Repartos</h2>
+
+            <!-- Filtros de fecha -->
+            <div class="repartos-filters">
+                <div class="filter-group">
+                    <label for="fecha-inicio">Fecha Inicio:</label>
+                    <input type="date" id="fecha-inicio">
+                </div>
+                <div class="filter-group">
+                    <label for="fecha-fin">Fecha Fin:</label>
+                    <input type="date" id="fecha-fin">
+                </div>
+                <div class="filter-group">
+                    <label for="fecha-reparto">Fecha de Reparto:</label>
+                    <input type="date" id="fecha-reparto">
+                </div>
+                <button id="btn-consultar" class="btn btn-primary">Consultar</button>
+            </div>
+
+            <!-- Tabla de repartos -->
+            <div id="repartos-table-container" style="display: none;">
+                <table id="repartos-table" class="table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Total Comprado</th>
+                            <!-- Columnas dinámicas para pedidos por negocio -->
+                            <!-- Columnas dinámicas para entregas por negocio -->
+                        </tr>
+                    </thead>
+                    <tbody id="repartos-tbody">
+                        <!-- Filas dinámicas -->
+                    </tbody>
+                </table>
+
+                <div class="actions">
+                    <button id="btn-guardar-reparto" class="btn btn-success" disabled>Guardar Reparto</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para registrar entrega -->
+        <div id="modal-entrega" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Registrar Entrega</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Producto:</label>
+                        <span id="modal-producto"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Negocio:</label>
+                        <span id="modal-negocio"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Cantidad Pedida:</label>
+                        <span id="modal-cantidad-pedida"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-cantidad-entregada">Cantidad Entregada:</label>
+                        <input type="number" id="modal-cantidad-entregada" min="0" step="0.01">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-guardar-entrega" class="btn btn-primary">Guardar Entrega</button>
+                    <button id="btn-cancelar-entrega" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav class="navbar">
+        <ul>
+            <li>
+                <a href="Pedidos.html">
+                    <i class="fas fa-shopping-cart icon"></i>
+                    <span class="text">Pedidos</span>
+                </a>
+            </li>
+            <li>
+                <a href="Compras.html">
+                    <i class="fas fa-receipt icon"></i>
+                    <span class="text">Compras</span>
+                </a>
+            </li>
+            <li>
+                <a href="Repartos.html">
+                    <i class="fas fa-truck icon"></i>
+                    <span class="text">Reparto</span>
+                </a>
+            </li>
+            <li>
+                <a href="Informes.html">
+                    <i class="fas fa-chart-bar icon"></i>
+                    <span class="text">Informes</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>

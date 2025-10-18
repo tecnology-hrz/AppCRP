@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="../Componentes/js/conexion.js"></script>
+    <title>Auxiliar en Compras y Repartos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../Componentes/css/Princiapal.css">
+    <script src="../Componentes/js/Pedidos.js"></script>
+    <script src="../Componentes/js/menu.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="title">
+                <h1>Auxiliar en Compras y Repartos</h1>
+                <p>Sistema de Gestión Inteligente</p>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="btn btn-online"><i class="fas fa-wifi"></i> Online</button>
+            <button class="btn btn-delete"><i class="fas fa-trash"></i> Eliminar negocio</button>
+            <button class="btn btn-new"><i class="fas fa-plus"></i> Nuevo negocio</button>
+        </div>
+    </header>
+    <main class="main-content">
+        <div class="pedidos-container">
+            <h2>Negocios Disponibles</h2>
+            <div class="negocios-selector" id="negocios-selector">
+                <!-- Los botones de negocios se cargarán dinámicamente -->
+            </div>
+
+            <div class="pedido-module" id="pedido-module" style="display: none;">
+                <div class="module-header">
+                    <h3 id="module-title">Gestión Completa - [Nombre del Negocio]</h3>
+                    <button class="btn-historial" id="btn-historial-pedidos"><i class="fas fa-history"></i> Ver Historial de Pedidos</button>
+                </div>
+
+                <!-- Paso 1: Datos Obligatorios -->
+                <div class="step" id="step1">
+                    <h4><i class="fas fa-info-circle"></i> Paso 1: Datos Obligatorios</h4>
+                    <form id="datos-obligatorios-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fecha-pedido"><i class="fas fa-calendar"></i> Fecha</label>
+                                <input type="date" id="fecha-pedido" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="persona-responsable"><i class="fas fa-user"></i> Persona Responsable</label>
+                                <input type="text" id="persona-responsable" placeholder="Nombre de quien realiza el pedido" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="valor-efectivo"><i class="fas fa-money-bill-wave"></i> Valor Efectivo Entregado (COP)</label>
+                                <div class="input-group">
+                                    <span class="input-prefix">$</span>
+                                    <input type="text" id="valor-efectivo" placeholder="0" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-guardar-datos"><i class="fas fa-save"></i> Guardar Datos Obligatorios</button>
+                    </form>
+                </div>
+
+                <!-- Paso 2: Realizar Pedido -->
+                <div class="step" id="step2" style="display: none;">
+                    <h4><i class="fas fa-shopping-cart"></i> Paso 2: Realizar Pedido</h4>
+
+                    <!-- Controles superiores -->
+                    <div class="step2-controls">
+                        <!-- Buscador de productos -->
+                        <div class="search-container">
+                            <input type="text" id="buscador-productos" placeholder="Buscar productos...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+
+                        <!-- Botón para agregar nuevo producto -->
+                        <button class="btn-nuevo-producto"><i class="fas fa-plus"></i> Nuevo Producto</button>
+
+                        <!-- Botón para guardar pedido -->
+                        <button class="btn-guardar-pedido-top" id="btn-guardar-pedido" disabled><i class="fas fa-save"></i> Guardar Pedido</button>
+                    </div>
+
+                    <!-- Tabla de productos -->
+                    <div class="table-container">
+                        <table class="productos-table">
+                            <thead>
+                                <tr style="background-color: #7AC143; color: white;">
+                                    <th>Producto</th>
+                                    <th>Unidad</th>
+                                    <th>Cantidad Pedido</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos-tbody">
+                                <!-- Las filas de productos se cargarán dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- El botón guardar pedido ahora está arriba con los controles -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para historial de pedidos -->
+    <div id="modal-historial" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-history"></i> Historial de Pedidos</h3>
+                <span id="modal-negocio-nombre" class="modal-subtitle"></span>
+                <button class="btn-close-modal" id="btn-close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="historial-filters">
+                    <div class="filter-group">
+                        <label for="filtro-fecha-inicio">Desde:</label>
+                        <input type="date" id="filtro-fecha-inicio">
+                    </div>
+                    <div class="filter-group">
+                        <label for="filtro-fecha-fin">Hasta:</label>
+                        <input type="date" id="filtro-fecha-fin">
+                    </div>
+                    <button class="btn-filtrar" id="btn-filtrar-historial"><i class="fas fa-filter"></i> Filtrar</button>
+                </div>
+                <div id="historial-pedidos-list">
+                    <!-- Los pedidos se cargarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar pedido -->
+    <div id="modal-editar-pedido" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Editar Pedido</h3>
+                <span id="modal-editar-negocio" class="modal-subtitle"></span>
+                <button class="btn-close-modal" id="btn-close-editar-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-editar-pedido">
+                    <div class="editar-info-section">
+                        <h4><i class="fas fa-info-circle"></i> Información del Pedido</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editar-fecha"><i class="fas fa-calendar"></i> Fecha</label>
+                                <input type="date" id="editar-fecha" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editar-responsable"><i class="fas fa-user"></i> Persona Responsable</label>
+                                <input type="text" id="editar-responsable" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editar-valor"><i class="fas fa-money-bill-wave"></i> Valor Efectivo (COP)</label>
+                                <div class="input-group">
+                                    <span class="input-prefix">$</span>
+                                    <input type="text" id="editar-valor" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="productos-editar-container">
+                        <h4><i class="fas fa-shopping-cart"></i> Productos del Pedido</h4>
+                        <div class="productos-editar-controls">
+                            <select id="select-producto-existente" class="select-producto">
+                                <option value="">Seleccionar producto existente...</option>
+                                <!-- Los productos se cargarán dinámicamente -->
+                            </select>
+                            <button type="button" class="btn-agregar-existente" title="Agregar producto existente"><i class="fas fa-plus-circle"></i> Agregar Existente</button>
+                            <button type="button" class="btn-crear-nuevo" title="Crear nuevo producto"><i class="fas fa-plus"></i> Crear Nuevo</button>
+                        </div>
+                        <div class="productos-editar-list-container">
+                            <div id="productos-editar-list">
+                                <!-- Los productos se cargarán dinámicamente -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancelar" id="btn-cancelar-edicion">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn-guardar-cambios">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <ul>
+            <li>
+                <a href="Pedidos.html">
+                    <i class="fas fa-shopping-cart icon"></i>
+                    <span class="text">Pedidos</span>
+                </a>
+            </li>
+            <li>
+                <a href="Compras.html">
+                    <i class="fas fa-receipt icon"></i>
+                    <span class="text">Compras</span>
+                </a>
+            </li>
+            <li>
+                <a href="Repartos.html">
+                    <i class="fas fa-truck icon"></i>
+                    <span class="text">Reparto</span>
+                </a>
+            </li>
+            <li>
+                <a href="Informes.html">
+                    <i class="fas fa-chart-bar icon"></i>
+                    <span class="text">Informes</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>
